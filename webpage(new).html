@@ -1,0 +1,300 @@
+<head>
+    <title>Spotify Data Analysis - Advanced Report</title>
+    <style>
+
+        :root {
+            --bg: #0A190C; 
+            --card: #18331B; 
+            --muted: #A0B2A3;
+            --accent: #1ED760; 
+            --glass: hsla(125, 30%, 25%, 0.8); 
+            --mono: 'JetBrains Mono', 'Roboto Mono', monospace;
+            --font-stack: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            font-family: var(--font-stack);
+            background: var(--bg);
+            color: #92e4a8;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 50px auto; 
+            padding: 0 30px;
+
+        }
+        header {
+            margin-bottom: 30px;
+        }   
+        header h1 {
+            margin: 0 0 5px 0;
+            font-size: 32px; 
+            color: var(--accent);
+        }
+
+        header p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 15px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 380px; 
+            gap: 32px; 
+            margin-top: 30px;
+        }
+
+        .card {
+            background: var(--card);
+            padding: 25px; 
+            border-radius: 16px; 
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6); 
+            border: 1px solid rgba(30, 215, 96, 0.1); 
+        }
+
+        h2, h3 {
+            color: #b0bbaf;
+            margin-top: 0;
+        }
+        
+        h4 {
+            font-size: 1rem;
+            margin: 12px 0 6px 0;
+            color: var(--accent);
+        }
+
+        .small {
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+       
+        .chart {
+            width: 100%;
+            border-radius: 10px;
+            display: block;
+            margin: 15px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+        }
+
+        
+        .kpi {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .kpi .item {
+            background: var(--glass);
+            padding: 15px;
+            border-radius: 10px;
+            min-width: 140px;
+            flex: 1;
+            border-left: 4px solid var(--accent);
+            transition: transform 0.2s;
+        }
+        
+        .kpi .item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(30, 215, 96, 0.2);
+        }
+
+     
+        pre {
+            background: #000000; 
+            padding: 15px;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-family: var(--mono);
+            font-size: 13px;
+            border: 1px solid #1c1c1c;
+        }
+
+      
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        a:hover {
+            color: #fff;
+        }
+
+        a.btn {
+            background: var(--accent);
+            color: var(--bg);
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: 700;
+            display: inline-block;
+            text-align: center;
+            transition: background 0.2s;
+        }
+        
+        a.btn:hover {
+            background: #15a54b;
+            color: var(--bg);
+        }
+
+        /* --- Footer --- */
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #1c1c1c;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        /* --- 4. Responsive Design --- */
+        @media (max-width: 990px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                margin: 30px auto;
+                padding: 0 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Spotify Data Analysis</h1>
+            <p class="small">Advanced Exploratory Report — Visualizations and Production-Ready Snippets. Source notebook: <a href="http://localhost:8888/notebooks/spotify_data_analysis.ipynb">Download notebook</a></p>
+        </header>
+
+        <div class="grid">
+            
+            <main>
+                <section class="card">
+                    <div class="section-title">
+                        <h2 style="margin:0">Project Summary & Insights</h2>
+                    </div>
+                    <p class="small">This comprehensive analysis dissects Spotify track-level features to uncover robust correlations between audio characteristics (energy, loudness, acousticness) and track popularity. The process involves meticulous data engineering, exploratory analysis, and synthesizing actionable genre-level trends.</p>
+
+                    <h3>Data & Preprocessing Pipeline</h3>
+                    <ul class="small">
+                        <li>Data Sources: Merged tracks.csv and SpotifyFeatures.csv.</li>
+                        <li>Key Features: popularity, duration_ms, energy, loudness (dB), acousticness, genre.</li>
+                    </ul>
+
+                    <h4>Cleaning & Feature Engineering</h4>
+                    <p class="small">The pipeline ensured data integrity and enhanced feature utility:</p>
+                    <ul class="small">
+                        <li>Checked for data completeness and statistical distributions (.info()/.describe()).</li>
+                        <li>Feature Transformation: Successfully converted duration_ms to duration (seconds) to improve interpretability, dropping the legacy column.</li>
+                        <li>Targeted filtering was applied to isolate extreme cases (e.g., popularity>90) for deep-dive analysis.</li>
+                    </ul>
+
+                    <h4>Core Analytical Findings (TL;DR)</h4>
+                    <div class="kpi" style="margin-bottom:15px">
+                        <div class="item">
+                            <strong style="font-size:1.4em">Energy</strong>
+                            <div class="small">Loudness strongly correlates with energy.</div>
+                        </div>
+                        <div class="item">
+                            <strong style="font-size:1.4em">Acousticness</strong>
+                            <div class="small">Higher acousticness tends to associate with lower popularity.</div>
+                        </div>
+                        <div class="item">
+                            <strong style="font-size:1.4em">Genre </strong>
+                            <div class="small">Top genres show different duration distributions and popularity patterns.</div>
+                        </div>
+                    </div>
+
+                    <h3>Visual Evidence & Interpretation</h3>
+                    
+                    <h4>1. Correlation Heatmap: Feature Interdependence</h4>
+                    <p class="small">This map quantifies feature relationships, highlighting the strong positive linkage between loudness and energy, and the significant negative correlation between acousticness and target variable, popularity.</p>
+                    <img src="C:\Users\aliak\OneDrive\Pictures\Screenshots 1\Screenshot 2025-11-13 233326.png" alt="Correlation HeatMap between variables" class="chart">
+
+                    <h4>2. Regression Analysis: Loudness vs Energy (Engineering Check)</h4>
+                    <p class="small">The robust positive regression line confirms that, systematically, louder tracks contain higher energy levels. This multicollinearity suggests these features may not be independent predictors in a linear model.</p>
+                    <img src="C:\Users\aliak\OneDrive\Pictures\Screenshots 1\Screenshot 2025-11-13 233358.png" alt="Loudness vs Energy" class="chart">
+
+                    <h4>3. Popularity vs Acousticness: Trend Discovery</h4>
+                    <p class="small">The observed negative trend line clearly supports the finding: tracks with lower degrees of production (higher acousticness score) tend to be less popular on average, a key insight for music production strategy.</p>
+                    <img src="C:\Users\aliak\OneDrive\Pictures\Screenshots 1\Screenshot 2025-11-13 233440.png" alt="Popularity vs Acousticness" class="chart">
+
+                    <h4>4. Duration Distribution by Genre</h4>
+                    <p class="small">Box plots illustrate the diverse duration profiles across major genres, indicating that a one-size-fits-all duration model is inappropriate. This is crucial for normalization in feature scaling.</p>
+                    <img src="C:\Users\aliak\OneDrive\Pictures\Screenshots 1\Screenshot 2025-11-13 233509.png" alt="Duration by Genre" class="chart">
+
+                    <h4>5. Genre Performance: Top Popularity Analysis</h4>
+                    <p class="small">A comparison of mean popularity across genres identifies dominant segments in the market, providing context for release strategies and target audience segmentation.</p>
+                    <img src="C:\Users\aliak\OneDrive\Pictures\Screenshots 1\Screenshot 2025-11-13 233600.png" alt="Top Genres by Popularity" class="chart">
+
+                    <h3 style="margin-top:20px">Strategic Conclusions</h3>
+                    <p class="small">The empirical evidence strongly suggests a significant relationship between inherent audio features and commercial popularity. These derived relationships offer direct inputs for building robust recommendation engines, playlist curation logic, and A/B testing hypotheses for new track releases.</p>
+                </section>
+
+                <section class="card" style="margin-top:20px">
+                    <h3>Actionable Recommendations</h3>
+                    <ul class="small">
+                        <li><b>Modeling:</b> Utilize a reduced feature set (e.g., Loudness XOR Energy) to manage multicollinearity in predictive models, focusing on maximizing explained variance.</li>
+                        <li><b>Feature Enhancement:</b> Implement Genre-Specific Normalization or use a one-hot encoding/embedding layer for genre to account for feature heterogeneity.</li>
+                        <li><b>Future Work:</b>Integrate temporal data (release date, streaming trends) to build a dynamic popularity prediction model that captures decay and seasonality.</li>
+                    </ul>
+                </section>
+            </main>
+            
+            <aside>
+                <div class="card">
+                    <h3>Project Metadata</h3>
+                    <p class="small"><strong>Authors:</strong> <br>-Akshiti Ali <br>-Koyel Saha</p>
+                    <p class="small"><strong>Tools:</strong> Python (Pandas, Matplotlib, Seaborn, Scikit-learn)</p>
+                    <p class="small"><strong>Artifacts:</strong> <a href="http://localhost:8888/notebooks/spotify_data_analysis.ipynb">Analysis Notebook (.ipynb)</a> • Source CSV files</p>
+                    <a class="btn" href="C:\Users\aliak\OneDrive\Desktop\BCA_Project_Report_Format[1].pdf" style="display:block; margin-top:15px">Download Full PDF Report</a>
+                </div>
+
+                <div class="card" style="margin-top:20px">
+                    <h3>Production-Ready Snippets</h3>
+                    <p class="small">Core code samples illustrating essential data preparation and visualization steps.</p>
+
+                    <h4 class="small">1. Dataset Ingestion (Pandas)</h4>
+                    <pre><code>df_tracks = pd.read_csv('C:/Users/aliak/OneDrive/Documents/tracks.csv')<br>
+                        df_tracks.head()
+                      </code></pre>
+
+                    <h4 class="small">2. Feature Statistics</h4>
+                    <pre><code>df_tracks.describe().transpose()</code></pre>
+
+                    <h4 class="small">3. Duration Conversion (Feature Engineering)</h4>
+                    <pre><code>
+                        df_tracks['duration'] = df_tracks['duration_ms'].apply(lambda x: round(x/1000, 2)) df_tracks.drop('duration_ms', axis=1, inplace=True)</code></pre>
+                    
+                    <h4 class="small">4. Filtering High Popularity Tracks</h4>
+                    <pre><code>most_popular = df_tracks.query('popularity > 90').sort_values( 'popularity', ascending=False )<br>
+                    print(most_popular[['name', 'artists', 'popularity']][:5])</code></pre>
+
+                    <h4 class="small">5. Correlation Plot Setup (Seaborn)</h4>
+                    <pre><code>plt.figure(figsize=(10,6))
+                    sns.regplot(data=df_combined, x='loudness', y='energy').set_title('Loudness vs Energy Correlation')</code></pre>
+
+                </div>
+            </aside>
+        </div>
+
+        <footer>
+            <div class="footer-content">
+                <p>Spotify Data Analysis Project | Advanced Exploratory Report</p>
+                <p style="margin-top:5px">Developed using HTML • CSS • Python (Data Science Stack)</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
